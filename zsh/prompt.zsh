@@ -51,8 +51,10 @@ need_push () {
 }
 
 directory_name() {
-  echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
+  # use ${PWD/$HOME/~} if this one renders env vars weird
+  echo "%{$fg_bold[cyan]%}%~%{$reset_color%}"
 }
+
 
 battery_status() {
   if [[ $(sysctl -n hw.model) == *"Book"* ]]
@@ -61,9 +63,29 @@ battery_status() {
   fi
 }
 
-export PROMPT=$'\n$(battery_status)in $(directory_name) $(git_dirty)$(need_push)\n› '
+symbol(){
+  echo "%(?..%{$fg_bold[red]%})› %{$reset_color%}"
+}
+
+username(){
+  if [[ "$SSH_CONNECTION" != '' ]]; then
+    echo '%n @ %m in '
+  fi
+  if [[ $UID -eq 0 ]]; then
+    echo '%n @ %m in '
+  fi
+}
+
+find_docker_machine() {
+  if [[ "$DOCKER_MACHINE_NAME" != "" ]]; then
+    echo "┊🐳 ┊"$DOCKER_MACHINE_NAME"┊"
+  fi
+}
+
+# export PROMPT=$'\n$(battery_status)in $(directory_name) $(git_dirty)$(need_push)\n› '
+export PROMPT=$'\n$(username)$(directory_name) $(find_docker_machine)$(git_dirty)$(need_push)\n%{$(iterm2_prompt_mark)%} '
 set_prompt () {
-  export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
+  export RPROMPT="%{$fg_bright[green]%}%{$reset_color%}"
 }
 
 precmd() {
