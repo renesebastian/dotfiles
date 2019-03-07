@@ -1,4 +1,4 @@
-## install
+# Install
 
 Run this:
 
@@ -19,13 +19,13 @@ defaults, and so on. Tweak this script, and occasionally run `dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
 
-# Dotfiles based of Holman
+## Origin
 
 I used the basics of the Holman dot files to create my own. If you're interested
 in the philosophy behind why projects like these are awesome, you might want
 to [read his post on the subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 
-## components
+## Components
 
 There's a few special files in the hierarchy.
 
